@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://i5dqt0lql4er"]
+
+[ext_resource type="PackedScene" uid="uid://dwot31bbc21tf" path="res://Player/player.tscn" id="2_4vgxx"]
+[ext_resource type="PackedScene" uid="uid://bik4xm3fr67rb" path="res://World/bush.tscn" id="2_to08h"]
+[ext_resource type="Texture2D" uid="uid://lp28yrd2c5m8" path="res://World/GrassBackground.png" id="3_qhw8n"]
+[ext_resource type="TileSet" uid="uid://tdqg68g4n5cx" path="res://World/road.tres" id="4_0m2ss"]
+[ext_resource type="Texture2D" uid="uid://bg01hbd7bwckw" path="res://World/Grass.png" id="5_jbe65"]
+[ext_resource type="Script" path="res://World/Grass.gd" id="6_d0bfm"]
+
+[node name="world" type="Node2D"]
+
+[node name="GrassBackground" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(160, 90)
+texture = ExtResource("3_qhw8n")
+region_enabled = true
+region_rect = Rect2(0, 0, 320, 180)
+region_filter_clip_enabled = true
+
+[node name="roadTileMap" type="TileMap" parent="."]
+tile_set = ExtResource("4_0m2ss")
+format = 2
+layer_0/tile_data = PackedInt32Array(720901, 196608, 2, 655365, 196608, 1, 589829, 196608, 1, 524293, 196608, 1, 458757, 262144, 0, 458758, 458752, 3, 393222, 262144, 4, 393223, 458752, 3, 327686, 262144, 4, 327687, 327680, 4, 262150, 262144, 4, 262151, 589824, 1, 196614, 524288, 4, 196615, 458752, 0, 131078, 458752, 4, 65542, 196608, 1, 6, 196608, 1, -65530, 196608, 0, 262155, 65536, 0, 262156, 524288, 0, 262157, 524288, 0, 262158, 524288, 0, 262159, 524288, 0, 262160, 524288, 0, 262161, 524288, 0, 262162, 524288, 0, 262163, 524288, 0, 327688, 524288, 3, 327689, 524288, 3, 327690, 524288, 3, 327691, 524288, 3, 327692, 524288, 3, 327693, 524288, 4, 327694, 524288, 4, 327695, 524288, 3, 327696, 524288, 3, 327697, 524288, 3, 327698, 524288, 3, 327699, 524288, 3, 262164, 458752, 0, 327700, 458752, 3, 393229, 262144, 4, 458765, 262144, 4, 524301, 262144, 4, 589837, 262144, 4, 655373, 262144, 4, 720909, 262144, 3, 720910, 458752, 3, 655374, 458752, 4, 589838, 458752, 4, 524302, 458752, 4, 458766, 458752, 4, 393230, 458752, 4, 131077, 65536, 0, 131075, 327680, 0, 131074, 524288, 0, 131073, 524288, 0, 131072, 524288, 0, 196607, 262144, 0, 196613, 524288, 3, 196612, 524288, 3, 196608, 524288, 3, 196609, 524288, 3, 196610, 524288, 3, 196611, 524288, 3, 262143, 262144, 3, 262153, 524288, 0, 262152, 393216, 0, 262154, 524288, 0, 131076, 393216, 0)
+
+[node name="HighlandTileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="YSort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" parent="YSort" instance=ExtResource("2_4vgxx")]
+position = Vector2(96, 104)
+
+[node name="Bush" parent="YSort" instance=ExtResource("2_to08h")]
+position = Vector2(184, 32)
+
+[node name="Bush2" parent="YSort" instance=ExtResource("2_to08h")]
+position = Vector2(40, 96)
+
+[node name="Bush3" parent="YSort" instance=ExtResource("2_to08h")]
+position = Vector2(184, 136)
+
+[node name="Bush4" parent="YSort" instance=ExtResource("2_to08h")]
+position = Vector2(256, 112)
+
+[node name="Grass" type="Node2D" parent="."]
+position = Vector2(136, 112)
+script = ExtResource("6_d0bfm")
+
+[node name="Sprite2D" type="Sprite2D" parent="Grass"]
+texture = ExtResource("5_jbe65")
