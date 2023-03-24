@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://c87ibvbyjlfas"]
+
+[ext_resource type="Script" path="res://UI/health_ui.gd" id="1_hefjp"]
+
+[node name="HealthUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 13.0
+offset_bottom = 17.0
+scale = Vector2(2.62528, 0.931653)
+script = ExtResource("1_hefjp")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 49.0
+offset_bottom = 26.0
+scale = Vector2(0.308094, 0.855072)
+text = "HP = 4"

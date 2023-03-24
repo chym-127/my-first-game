@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://i5dqt0lql4er"]
+[gd_scene load_steps=9 format=3 uid="uid://i5dqt0lql4er"]
 
 [ext_resource type="PackedScene" uid="uid://dwot31bbc21tf" path="res://Player/player.tscn" id="2_4vgxx"]
 [ext_resource type="PackedScene" uid="uid://bik4xm3fr67rb" path="res://World/bush.tscn" id="2_to08h"]
@@ -6,6 +6,8 @@
 [ext_resource type="TileSet" uid="uid://tdqg68g4n5cx" path="res://World/road.tres" id="4_0m2ss"]
 [ext_resource type="PackedScene" uid="uid://dx88yf148kf4h" path="res://World/grass.tscn" id="5_o3xky"]
 [ext_resource type="PackedScene" uid="uid://hjaya1qhju3p" path="res://Enemies/enemy.tscn" id="6_ivnug"]
+[ext_resource type="PackedScene" uid="uid://c87ibvbyjlfas" path="res://UI/health_ui.tscn" id="8_ka622"]
+[ext_resource type="PackedScene" uid="uid://ccyybk3h5cr7u" path="res://common/soft_conllistion.tscn" id="8_y6lx4"]
 
 [node name="world" type="Node2D"]
 
@@ -14,7 +16,7 @@ texture_repeat = 2
 position = Vector2(160, 90)
 texture = ExtResource("3_qhw8n")
 region_enabled = true
-region_rect = Rect2(0, 0, 320, 180)
+region_rect = Rect2(-177, -101, 630, 374)
 region_filter_clip_enabled = true
 
 [node name="roadTileMap" type="TileMap" parent="."]
@@ -30,6 +32,9 @@ y_sort_enabled = true
 
 [node name="Player" parent="YSort" instance=ExtResource("2_4vgxx")]
 position = Vector2(96, 104)
+
+[node name="Camera2D" type="Camera2D" parent="YSort/Player"]
+position = Vector2(64, -16)
 
 [node name="Bush" parent="YSort" instance=ExtResource("2_to08h")]
 position = Vector2(184, 32)
@@ -63,3 +68,17 @@ position = Vector2(200, 104)
 
 [node name="enemy" parent="YSort" instance=ExtResource("6_ivnug")]
 position = Vector2(184, 64)
+
+[node name="enemy2" parent="YSort" instance=ExtResource("6_ivnug")]
+position = Vector2(40, 56)
+
+[node name="enemy3" parent="YSort" instance=ExtResource("6_ivnug")]
+position = Vector2(112, 160)
+
+[node name="SoftConllistion" parent="." instance=ExtResource("8_y6lx4")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource("8_ka622")]
+
+[editable path="CanvasLayer/HealthUI"]

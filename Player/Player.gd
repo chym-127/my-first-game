@@ -17,9 +17,12 @@ enum {
 @onready var animationState = animationTree.get("parameters/playback")
 var state = RUN
 
+var stats = PlayerStats
+
 var attack_vector = Vector2.ZERO
 
 func _ready():
+	stats.connect("no_health",Callable(self, "queue_free"))
 	animationTree.active = true
 	update_animation(Vector2(0,1))
 
@@ -83,3 +86,14 @@ func update_animation(move_vec:Vector2):
 	else:
 		animationState.travel("Idle")
 	
+
+func show_hurt_effect():
+	var scene = get_tree().current_scene
+	var HurtEffect = load("res://Effects/hurt_effect.tscn")
+	var hurtEffect = HurtEffect.instantiate()
+	hurtEffect.global_position = global_position
+	scene.add_child(hurtEffect)
+
+func _on_hurt_box_area_entered(area):
+	stats.health -= 1
+	show_hurt_effect()

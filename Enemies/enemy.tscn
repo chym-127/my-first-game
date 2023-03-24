@@ -1,9 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://hjaya1qhju3p"]
+[gd_scene load_steps=19 format=3 uid="uid://hjaya1qhju3p"]
 
 [ext_resource type="Texture2D" uid="uid://bxi3jv882uagc" path="res://Enemies/Bat.png" id="1_aik8g"]
 [ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_q8r12"]
 [ext_resource type="Texture2D" uid="uid://ckcyfg8umgx3o" path="res://Shadows/SmallShadow.png" id="2_6skue"]
 [ext_resource type="PackedScene" uid="uid://dnl4b3rs6ur4b" path="res://World/AreaBoxs/hurt_box.tscn" id="3_7yifl"]
+[ext_resource type="PackedScene" uid="uid://b7ga8l33j6vrw" path="res://Enemies/territory_box.tscn" id="5_icyqk"]
+[ext_resource type="PackedScene" uid="uid://cf87qxd71w25k" path="res://common/stats.tscn" id="6_8yott"]
+[ext_resource type="PackedScene" uid="uid://vhbqjtqdtq6b" path="res://World/AreaBoxs/hit_box.tscn" id="7_3qxy0"]
+[ext_resource type="PackedScene" uid="uid://ccyybk3h5cr7u" path="res://common/soft_conllistion.tscn" id="8_rhank"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jgar1"]
 atlas = ExtResource("1_aik8g")
@@ -59,10 +63,20 @@ height = 10.0
 radius = 6.0
 height = 14.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yncw4"]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ypn3l"]
+radius = 3.0
+height = 10.0
+
 [node name="enemy" type="CharacterBody2D"]
+collision_layer = 128
 script = ExtResource("1_q8r12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_xbnwp")
 animation = &"enemy"
 autoplay = "enemy"
@@ -70,16 +84,16 @@ frame = 5
 frame_progress = 1.0
 
 [node name="SmallShadow" type="Sprite2D" parent="."]
-position = Vector2(0, 8)
+position = Vector2(0, 3)
 texture = ExtResource("2_6skue")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8)
+position = Vector2(0, 3)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3epby")
 
 [node name="hurtBox" parent="." instance=ExtResource("3_7yifl")]
-position = Vector2(0, 1)
+position = Vector2(0, -4)
 collision_layer = 8
 collision_mask = 16
 
@@ -87,6 +101,30 @@ collision_mask = 16
 position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_0iws5")
 
+[node name="TerritoryBox" parent="." instance=ExtResource("5_icyqk")]
+position = Vector2(0, -5)
+
+[node name="stats" parent="." instance=ExtResource("6_8yott")]
+max_health = 2
+
+[node name="hitBox" parent="." instance=ExtResource("7_3qxy0")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="hitBox" index="0"]
+position = Vector2(1, -9)
+shape = SubResource("CapsuleShape2D_yncw4")
+
+[node name="SoftConllistion" parent="." instance=ExtResource("8_rhank")]
+
+[node name="CollisionShape2D" parent="SoftConllistion" index="0"]
+position = Vector2(0, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ypn3l")
+
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="no_health" from="stats" to="." method="_on_stats_no_health"]
 
 [editable path="hurtBox"]
+[editable path="hitBox"]
+[editable path="SoftConllistion"]

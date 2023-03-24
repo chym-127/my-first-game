@@ -1,7 +1,8 @@
-[gd_scene load_steps=54 format=3 uid="uid://dwot31bbc21tf"]
+[gd_scene load_steps=56 format=3 uid="uid://dwot31bbc21tf"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_wt0px"]
 [ext_resource type="Texture2D" uid="uid://b7rf7cr5ip2r1" path="res://Player/Player.png" id="2_2xiqr"]
+[ext_resource type="PackedScene" uid="uid://dnl4b3rs6ur4b" path="res://World/AreaBoxs/hurt_box.tscn" id="3_4qc2k"]
 [ext_resource type="PackedScene" uid="uid://vhbqjtqdtq6b" path="res://World/AreaBoxs/hit_box.tscn" id="3_bd5fy"]
 [ext_resource type="Script" path="res://Player/hit_box.gd" id="4_xnk6p"]
 
@@ -690,21 +691,26 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_af635"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wnaig"]
+radius = 7.0
+height = 16.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8jacf"]
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(100, 61)
 collision_layer = 2
+collision_mask = 65
 script = ExtResource("1_wt0px")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -13)
+position = Vector2(0, -10)
 texture = ExtResource("2_2xiqr")
 hframes = 60
 frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -3.00002)
+position = Vector2(0, -2.28882e-05)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_kketf")
 
@@ -723,17 +729,27 @@ parameters/Idle/blend_position = Vector2(-0.6448, 0.873066)
 parameters/Roll/blend_position = Vector2(-0.00302726, 1.0628)
 parameters/Run/blend_position = Vector2(0.5776, 0.55)
 
-[node name="hitBoxMark2" parent="." instance=ExtResource("3_bd5fy")]
-visible = false
+[node name="hurtBox" parent="." instance=ExtResource("3_4qc2k")]
+position = Vector2(0, 2)
+collision_layer = 4
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="hurtBox" index="0"]
 position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_wnaig")
+
+[node name="hitBoxMark2" parent="." instance=ExtResource("3_bd5fy")]
+position = Vector2(0, -7)
 collision_layer = 16
 collision_mask = 8
 script = ExtResource("4_xnk6p")
 
 [node name="CollisionShape2D" parent="hitBoxMark2" index="0"]
-visible = false
 position = Vector2(14, 0)
 shape = SubResource("CapsuleShape2D_8jacf")
 disabled = true
 
+[connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
+
+[editable path="hurtBox"]
 [editable path="hitBoxMark2"]
